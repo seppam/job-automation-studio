@@ -1,0 +1,56 @@
+# User Profile Template
+# Copy this file to profile.yml and fill in your details.
+# profile.yml is gitignored — your secrets stay on your machine.
+
+candidate:
+  name:  "Your Full Name"
+  email: "your@email.com"
+  phone: "+62 xxx xxxx xxxx"
+  location: "City, Country"
+
+target_role: "Your Target Job Title"
+
+work_type: "Remote only"   # Remote only / Hybrid preferred / On-site OK / No preference
+
+locations:
+  - "Karawang, Jawa Barat"
+  - "Cikarang, Jawa Barat"
+  - "Jakarta, Indonesia"
+  - "Singapore (Remote)"
+
+seniority:
+  skip_senior: true    # true = skip Senior/Lead/Manager/Director roles
+  level: "Entry / Junior only"   # Entry / Junior only / Mid-level OK / Senior OK
+
+sites:
+  - "LinkedIn"
+  - "Indeed"
+  - "Glints"
+
+daily_cap: 50   # Max applications per day
+
+salary:
+  local: "IDR 6,500,000/month"      # Indonesia / local
+  remote_sg: "USD 500/month"         # Singapore remote
+  remote_my: "USD 500/month"         # Malaysia remote
+  remote_th: "USD 500/month"         # Thailand remote
+
+exclude_companies:
+  - "bank"
+  - "fintech"
+  - "ovo"
+  - "dana"
+  - "gopay"
+  - "linkaja"
+  # Add specific company names you want to avoid:
+  # - "Bank BCA"
+  # - "Bank Mandiri"
+
+cover_letter_tone: "Professional"   # Professional / Friendly / Direct
+
+cv_path: "/path/to/your/cv.pdf"
+
+notes: |
+  Any additional notes about your job search preferences.
+  E.g. "Avoid companies that require driving license"
+  E.g. "Prefer startups over corporates"

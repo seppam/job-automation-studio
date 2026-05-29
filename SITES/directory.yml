@@ -1,0 +1,128 @@
+# Job Sites Directory
+# Add or modify sites here to extend the generator
+
+version: "1.0"
+
+sites:
+  linkedin:
+    display_name: "LinkedIn"
+    url: "https://linkedin.com"
+    careers_url: "https://www.linkedin.com/jobs"
+    search_url_pattern: "https://www.linkedin.com/jobs/search/?keywords={role}&location={location}&f_AL=true"
+    easy_apply: true
+    notes: "Best for automation via Easy Apply. Watch for error_code:9101 anti-bot."
+    filters:
+      - name: "Easy Apply Only"
+        param: "f_AL=true"
+      - name: "Remote"
+        param: "f_WT=2"
+      - name: "Hybrid"
+        param: "f_WT=1"
+      - name: "On-site"
+        param: "f_WT=3"
+    anti_bot: true
+    anti_bot_notes: "Has aggressive anti-bot. Use 45-90s delays. Rotate VPN if blocked."
+
+  indeed:
+    display_name: "Indeed"
+    url: "https://indeed.com"
+    search_url_pattern: "https://www.indeed.com/jobs?q={role}&l={location}"
+    easy_apply: true
+    notes: "Direct apply. Less strict on bots than LinkedIn."
+    anti_bot: false
+    daily_apply_limit: 100
+
+  glassdoor:
+    display_name: "Glassdoor"
+    url: "https://glassdoor.com"
+    search_url_pattern: "https://www.glassdoor.com/Search/results.htm?keyword={role}&loc={location}"
+    easy_apply: false
+    notes: "Best for company research. Direct apply only. Good for salary info."
+    anti_bot: true
+
+  jobstreet_id:
+    display_name: "Jobstreet Indonesia"
+    url: "https://jobstreet.co.id"
+    search_url_pattern: "https://www.jobstreet.co.id/id/job-search?keywords={role}&locations={location}"
+    easy_apply: true
+    notes: "Major job board in Indonesia. Good for local companies."
+    anti_bot: false
+    language: "id"
+
+  glints:
+    display_name: "Glints"
+    url: "https://glints.com"
+    search_url_pattern: "https://glints.com/lowongan-kerja/?keywords={role}&location={location}"
+    easy_apply: true
+    notes: "Tech and startup jobs in Indonesia. Also great for recruiter outreach."
+    anti_bot: false
+    language: "id"
+
+  angel_list:
+    display_name: "AngelList / Wellfound"
+    url: "https://angel.co"
+    search_url_pattern: "https://angel.co/jobs?keywords={role}&locations={location}"
+    easy_apply: true
+    notes: "Startups. Remote-friendly. Salaries usually shown upfront."
+    anti_bot: false
+
+  weworkremotely:
+    display_name: "We Work Remotely"
+    url: "https://weworkremotely.com"
+    search_url_pattern: "https://weworkremotely.com/categories/remote-{role}-jobs"
+    easy_apply: false
+    notes: "100% remote jobs. Simple layout, easy to automate."
+    anti_bot: false
+
+  remoteok:
+    display_name: "RemoteOK"
+    url: "https://remoteok.com"
+    search_url_pattern: "https://remoteok.com/remote-{role}-jobs"
+    easy_apply: false
+    notes: "Remote jobs aggregator. Very simple layout."
+    anti_bot: false
+
+  startupers:
+    display_name: "Startupers"
+    url: "https://startupers.com"
+    search_url_pattern: "https://startupers.com/?q={role}"
+    easy_apply: false
+    notes: "Startup job board. Asia-focused."
+    anti_bot: false
+
+  linkedin_remote:
+    display_name: "LinkedIn (Remote filter)"
+    url: "https://linkedin.com"
+    search_url_pattern: "https://www.linkedin.com/jobs/search/?keywords={role}&location=Anywhere&f_AL=true&f_WT=2"
+    easy_apply: true
+    notes: "Same as LinkedIn but pre-filtered to remote-only."
+    anti_bot: true
+
+# Common company career pages (add your own)
+career_pages:
+  - name: "Tokopedia"
+    url: "https://www.tokopedia.com/careers"
+  - name: "Gojek"
+    url: "https://www.gojek.com/careers"
+  - name: "Traveloka"
+    url: "https://www.traveloka.com/en/careers"
+  - name: "Bukalapak"
+    url: "https://careers.bukalapak.com"
+  - name: "Blibli"
+    url: "https://www.blibli.com/careers"
+  - name: "Halodoc"
+    url: "https://www.halodoc.com/careers"
+  - name: "Tiket.com"
+    url: "https://www.tiket.com/careers"
+  - name: "Sea Group (Shopee)"
+    url: "https://careers.seagroup.com"
+  - name: "LINE Indonesia"
+    url: "https://linecareers.co.id"
+  - name: "Agoda"
+    url: "https://careers.agoda.com"
+  - name: "Cognizant"
+    url: "https://www.cognizant.com/global-en/Careers"
+  - name: "Accenture"
+    url: "https://www.accenture.com/careers"
+  - name: "Lazada"
+    url: "https://careers.lazada.com"

@@ -1,0 +1,26 @@
+# Secrets — NEVER commit these
+PROFILES/profile.yml
+*.pyc
+__pycache__/
+*.log
+.env
+.DS_Store
+
+# Generated output (these get re-generated)
+data/
+output/
+
+# Python
+venv/
+.venv/
+env/
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Gradio
+gradio_cached_examples/
