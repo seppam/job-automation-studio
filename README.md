@@ -1,5 +1,11 @@
 # 🚀 Job Automation Studio
 
+> 📄 **[Download the Visual SOP Guide (PDF) — Job-Automation-Studio-SOP.pdf](Job-Automation-Studio-SOP.pdf)**
+> 
+> Step-by-step screenshots for non-technical users. Print it, follow along, done.
+
+---
+
 **A no-code tool that generates personalised job application automation scripts.**
 Answer a few questions → Download your script → Run it with your AI agent.
 

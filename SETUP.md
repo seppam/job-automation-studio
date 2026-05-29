@@ -1,5 +1,7 @@
 # 📖 Detailed Setup Guide
 
+> 💡 **Prefer pictures?** Download the **[Visual SOP Guide (PDF)](Job-Automation-Studio-SOP.pdf)** for step-by-step screenshots.
+
 Follow this guide step by step if you're new to Python or automation tools.
 
 ---
