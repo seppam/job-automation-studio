@@ -8,7 +8,7 @@ sites:
     display_name: "LinkedIn"
     url: "https://linkedin.com"
     careers_url: "https://www.linkedin.com/jobs"
-    search_url_pattern: "https://www.linkedin.com/jobs/search/?keywords={role}&location={location}&f_AL=true"
+    search_url_pattern: "https://www.linkedin.com/jobs/search/?keywords={role}&location={location}&f_AL=true&f_WT=1%2C2"
     easy_apply: true
     notes: "Best for automation via Easy Apply. Watch for error_code:9101 anti-bot."
     filters:
@@ -93,7 +93,7 @@ sites:
   linkedin_remote:
     display_name: "LinkedIn (Remote filter)"
     url: "https://linkedin.com"
-    search_url_pattern: "https://www.linkedin.com/jobs/search/?keywords={role}&location=Anywhere&f_AL=true&f_WT=2"
+    search_url_pattern: "https://www.linkedin.com/jobs/search/?keywords={role}&location={location}&f_AL=true&f_WT=2"
     easy_apply: true
     notes: "Same as LinkedIn but pre-filtered to remote-only."
     anti_bot: true

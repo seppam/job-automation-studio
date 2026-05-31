@@ -122,7 +122,7 @@ def build_url(site: str, role: str, location: str) -> str:
     re = role.replace(" ", "+")
     lo = location.replace(",", "%2C").replace(" ", "+")
     table = {{
-        "LinkedIn":       f"https://www.linkedin.com/jobs/search/?keywords={{re}}&location={{lo}}&f_AL=true",
+        "LinkedIn":       f"https://www.linkedin.com/jobs/search/?keywords={{re}}&location={{lo}}&f_AL=true&f_WT=1%2C2",
         "Indeed":         f"https://www.indeed.com/jobs?q={{re}}&l={{lo}}",
         "Glassdoor":      f"https://www.glassdoor.com/Search/results.htm?keyword={{re}}&loc={{lo}}",
         "Jobstreet ID":   f"https://www.jobstreet.co.id/id/job-search?keywords={{re}}&locations={{location}}",

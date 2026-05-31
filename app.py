@@ -24,7 +24,12 @@ JOB_SITES_INFO = {
     "LinkedIn": {
         "url": "linkedin.com",
         "easy_apply": True,
-        "notes": "Best for automation (Easy Apply). Watch for error_code:9101 anti-bot.",
+        "notes": "Best for automation (Easy Apply). Easy Apply + Hybrid/Remote filter. Watch for error_code:9101 anti-bot.",
+    },
+    "LinkedIn (Remote filter)": {
+        "url": "linkedin.com",
+        "easy_apply": True,
+        "notes": "LinkedIn pre-filtered to Remote-only jobs (f_WT=2). Fewer results but more targeted.",
     },
     "Indeed": {
         "url": "indeed.com",
@@ -65,15 +70,16 @@ JOB_SITES_INFO = {
 
 LOCATION_PRESETS = {
     "🇮🇩 Indonesia — Karawang/Cikarang (on-site)": [
-        "Karawang, Jawa Barat", "Cikarang, Jawa Barat", "Bekasi, Jawa Barat", "Purwakarta, Jawa Barat",
+        "Karawang, West Java, Indonesia", "Cikarang, Jawa Barat, Indonesia", "Bekasi, Jawa Barat, Indonesia",
     ],
-    "🇮🇩 Indonesia — Jakarta (hybrid/remote)": ["Jakarta, Indonesia"],
-    "🇸🇬 Singapore (remote)": ["Singapore (Remote)"],
-    "🇲🇾 Malaysia (remote)": ["Malaysia (Remote)"],
-    "🇹🇭 Thailand (remote)": ["Thailand (Remote)"],
+    "🇮🇩 Jakarta (hybrid/remote)": ["Jakarta, Indonesia"],
+    "🇮🇩 Indonesia — SAP/ERP/SysAdmin": ["Indonesia"],
+    "🇸🇬 Singapore": ["Singapore"],
+    "🇲🇾 Malaysia": ["Malaysia"],
+    "🇹🇭 Thailand": ["Thailand"],
     "🌏 All locations above": [
-        "Karawang, Jawa Barat", "Cikarang, Jawa Barat", "Bekasi, Jawa Barat",
-        "Jakarta, Indonesia", "Singapore (Remote)", "Malaysia (Remote)", "Thailand (Remote)",
+        "Karawang, West Java, Indonesia", "Cikarang, Jawa Barat, Indonesia", "Bekasi, Jawa Barat, Indonesia",
+        "Jakarta, Indonesia", "Indonesia", "Singapore", "Malaysia", "Thailand",
     ],
 }
 
@@ -129,9 +135,9 @@ def build_url(site: str, role: str, location: str) -> str:
     re = role.replace(" ", "+")
     lo = location.replace(",", "%2C").replace(" ", "+")
     table = {
-        "LinkedIn":       f"https://www.linkedin.com/jobs/search/?keywords={re}&location={lo}&f_AL=true",
+        "LinkedIn":       f"https://www.linkedin.com/jobs/search/?keywords={re}&location={lo}&f_AL=true&f_WT=1%2C2",
+        "LinkedIn (Remote filter)": f"https://www.linkedin.com/jobs/search/?keywords={re}&location={lo}&f_AL=true&f_WT=2",
         "Indeed":         f"https://www.indeed.com/jobs?q={re}&l={lo}",
-        "Glassdoor":      f"https://www.glassdoor.com/Search/results.htm?keyword={re}&loc={lo}",
         "Jobstreet ID":   f"https://www.jobstreet.co.id/id/job-search?keywords={re}&locations={location}",
         "Glints":         f"https://glints.com/lowongan-kerja/?keywords={re}",
         "AngelList":      f"https://angel.co/jobs?keywords={re}",
@@ -365,7 +371,8 @@ def build_url(site: str, role: str, location: str) -> str:
     re = role.replace(" ", "+")
     lo = location.replace(",", "%2C").replace(" ", "+")
     table = {{
-        "LinkedIn":       f"https://www.linkedin.com/jobs/search/?keywords={{re}}&location={{lo}}&f_AL=true",
+        "LinkedIn":       f"https://www.linkedin.com/jobs/search/?keywords={{re}}&location={{lo}}&f_AL=true&f_WT=1%2C2",
+        "LinkedIn (Remote filter)": f"https://www.linkedin.com/jobs/search/?keywords={{re}}&location={{lo}}&f_AL=true&f_WT=2",
         "Indeed":         f"https://www.indeed.com/jobs?q={{re}}&l={{lo}}",
         "Glassdoor":      f"https://www.glassdoor.com/Search/results.htm?keyword={{re}}&loc={{lo}}",
         "Jobstreet ID":   f"https://www.jobstreet.co.id/id/job-search?keywords={{re}}&locations={{location}}",
