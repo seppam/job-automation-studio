@@ -22,6 +22,12 @@ sites:
         param: "f_WT=3"
     anti_bot: true
     anti_bot_notes: "Has aggressive anti-bot. Use 45-90s delays. Rotate VPN if blocked."
+    screening_questions:
+      - "authorized to work"
+      - "require sponsorship"
+      - "salary expectation"
+    match_scoring: true
+    dry_run: true
 
   indeed:
     display_name: "Indeed"
@@ -31,6 +37,11 @@ sites:
     notes: "Direct apply. Less strict on bots than LinkedIn."
     anti_bot: false
     daily_apply_limit: 100
+    screening_questions:
+      - "authorized to work"
+      - "salary expectation"
+    match_scoring: true
+    dry_run: true
 
   glassdoor:
     display_name: "Glassdoor"
@@ -39,24 +50,33 @@ sites:
     easy_apply: false
     notes: "Best for company research. Direct apply only. Good for salary info."
     anti_bot: true
+    match_scoring: true
+    dry_run: true
 
   jobstreet_id:
     display_name: "Jobstreet Indonesia"
     url: "https://jobstreet.co.id"
     search_url_pattern: "https://www.jobstreet.co.id/id/job-search?keywords={role}&locations={location}"
     easy_apply: true
-    notes: "Major job board in Indonesia. Good for local companies."
+    notes: "Major Indonesian job board. Covers local and Jakarta roles."
     anti_bot: false
     language: "id"
+    screening_questions:
+      - "authorized to work"
+      - "salary expectation"
+    match_scoring: true
+    dry_run: true
 
   glints:
-    display_name: "Glints"
+    display_name: "Glints Indonesia"
     url: "https://glints.com"
     search_url_pattern: "https://glints.com/lowongan-kerja/?keywords={role}&location={location}"
     easy_apply: true
-    notes: "Tech and startup jobs in Indonesia. Also great for recruiter outreach."
+    notes: "Tech and startup jobs in Indonesia."
     anti_bot: false
     language: "id"
+    match_scoring: true
+    dry_run: true
 
   angel_list:
     display_name: "AngelList / Wellfound"
@@ -65,6 +85,10 @@ sites:
     easy_apply: true
     notes: "Startups. Remote-friendly. Salaries usually shown upfront."
     anti_bot: false
+    screening_questions:
+      - "authorized to work"
+    match_scoring: true
+    dry_run: true
 
   weworkremotely:
     display_name: "We Work Remotely"
@@ -73,6 +97,8 @@ sites:
     easy_apply: false
     notes: "100% remote jobs. Simple layout, easy to automate."
     anti_bot: false
+    match_scoring: true
+    dry_run: true
 
   remoteok:
     display_name: "RemoteOK"
@@ -81,6 +107,8 @@ sites:
     easy_apply: false
     notes: "Remote jobs aggregator. Very simple layout."
     anti_bot: false
+    match_scoring: true
+    dry_run: true
 
   startupers:
     display_name: "Startupers"
@@ -89,6 +117,8 @@ sites:
     easy_apply: false
     notes: "Startup job board. Asia-focused."
     anti_bot: false
+    match_scoring: true
+    dry_run: true
 
   linkedin_remote:
     display_name: "LinkedIn (Remote filter)"
@@ -97,6 +127,22 @@ sites:
     easy_apply: true
     notes: "Same as LinkedIn but pre-filtered to remote-only."
     anti_bot: true
+    screening_questions:
+      - "authorized to work"
+      - "require sponsorship"
+      - "salary expectation"
+    match_scoring: true
+    dry_run: true
+
+  jobstreet_sg:
+    display_name: "Jobstreet Singapore"
+    url: "https://jobstreet.com.sg"
+    search_url_pattern: "https://www.jobstreet.com.sg/en/job-search?keywords={role}&locations={location}"
+    easy_apply: true
+    notes: "Singapore job board."
+    anti_bot: false
+    match_scoring: true
+    dry_run: true
 
 # Common company career pages (add your own)
 career_pages:

@@ -68,13 +68,31 @@ Then open **http://localhost:7860** in your browser.
 | Site | Auto-Apply? | Best For |
 |---|---|---|
 | **LinkedIn** | ✅ Easy Apply | Global, fast automation |
+| **LinkedIn (Remote)** | ✅ Easy Apply | Remote-only filter |
 | **Indeed** | ✅ Direct Apply | Large variety |
 | **Glassdoor** | ⚠️ Manual | Company research + jobs |
 | **Jobstreet ID** | ✅ Easy Apply | Indonesian local jobs |
+| **Jobstreet SG** | ✅ Easy Apply | Singapore jobs |
 | **Glints** | ✅ Easy Apply | Tech roles in Indonesia |
 | **AngelList** | ✅ Easy Apply | Startups, remote-friendly |
 | **WeWorkRemotely** | ⚠️ Manual | 100% remote jobs |
 | **RemoteOK** | ⚠️ Manual | Remote tech jobs |
+
+---
+
+## 🆕 New Features (v2)
+
+### 🎯 Match Scoring
+Every job is scored 0–100% based on keyword overlap with your CV. Jobs below your threshold are automatically skipped. Configure with the **"Min Match Score"** slider in Step 2.
+
+### 🧪 Dry Run Mode
+Test your script **without submitting any applications**. Enable "Dry Run Mode" in the dashboard or pass `--dry-run` when running your script. Great for validating your filters before going live.
+
+### 📊 Expanded Tracking
+Applications are now tracked with full details: job title, company, match score, timestamp, and status (`applied` / `failed` / `skipped` / `dryrun`).
+
+### ❓ Screening Questions
+Generated scripts automatically handle common screening questions: work authorization, sponsorship, years of experience, and salary expectation — per-site defaults are configurable in `profile.yml`.
 
 ---
 

@@ -18,7 +18,7 @@ def generate_script(config: dict) -> str:
       name, email, phone, role, locations[], sites[],
       exclusions[], daily_cap, salary_local, salary_remote,
       skip_senior, remote_only, tone, work_type,
-      cv_skills[], ai_mode, tool
+      cv_skills[], ai_mode, tool, dry_run, min_match_score
     """
     locs_json  = json.dumps(config.get("locations", []), indent=2)
     sites_json = json.dumps(config.get("sites", []), indent=2)
@@ -37,6 +37,8 @@ def generate_script(config: dict) -> str:
     }
     to = tone_open.get(config.get("tone", "Professional"), tone_open["Professional"])
     tc = tone_close.get(config.get("tone", "Professional"), tone_close["Professional"])
+    dry_run = str(config.get("dry_run", False)).title()
+    min_match_score = config.get("min_match_score", 0.3)
 
     return f'''#!/usr/bin/env python3
 """
@@ -68,6 +70,8 @@ SKIP_SENIOR     = {str(config.get("skip_senior", True)).title()}
 REMOTE_ONLY     = {str(config.get("remote_only", False)).title()}
 SALARY_LOCAL    = "{config.get("salary_local", "negotiable")}"
 SALARY_REMOTE   = "{config.get("salary_remote", "negotiable")}"
+DRY_RUN         = {dry_run}
+MIN_MATCH_SCORE = {min_match_score}
 
 # ── TRACKER ─────────────────────────────────────────────────────────────────────
 DATA_DIR = Path(__file__).parent / "data"
@@ -81,6 +85,56 @@ def load_ids():
 
 def save_ids(ids):
     TRACKER.write_text(json.dumps({{"applied_ids": list(ids)}}, indent=2))
+
+# ── Match Scoring ──────────────────────────────────────────────────────────────
+CV_KEYWORDS = {{
+    "sap": 2, "sap basis": 2, "sap support": 2,
+    "asp.net": 2, "c#": 1,
+    "sql": 2, "mysql": 1, "database": 1,
+    "react": 2, "node.js": 2, "next.js": 2, "mern": 2,
+    "javascript": 1, "python": 2,
+    "docker": 2, "aws": 2, "devops": 2, "ci/cd": 2,
+    "jira": 2, "api": 2, "microservices": 2,
+    "it support": 3, "it helpdesk": 3, "helpdesk": 3,
+    "application support": 3, "tech support": 2,
+    "erp": 2, "fullstack": 2, "full-stack": 2,
+    "linux": 2, "windows server": 1,
+    "troubleshooting": 2, "ticketing": 2, "sla": 2,
+    "git": 1, "github": 1, "agile": 1,
+}}
+
+def score_job(title: str, company: str = "") -> float:
+    text = (str(title) + " " + str(company)).lower()
+    total = sum(w for kw, w in CV_KEYWORDS.items() if kw in text)
+    return round(min(total / 50.0, 1.0), 2)
+
+# ── Enhanced Tracker (with scores) ───────────────────────────────────────────
+def load_tracker():
+    if TRACKER.exists():
+        try:
+            return json.loads(TRACKER.read_text())
+        except Exception:
+            return {{"applied_ids": []}}
+    return {{"applied_ids": []}}
+
+def save_tracker(data):
+    TRACKER.write_text(json.dumps(data, indent=2))
+
+def record(job_id, title, company, score, status="applied"):
+    data = load_tracker()
+    applied_list = data.get("applied", [])
+    if not any(a.get("job_id") == job_id for a in applied_list):
+        applied_list.append({{
+            "job_id": job_id,
+            "title": title,
+            "company": company,
+            "score": score,
+            "status": status,
+            "at": time.strftime("%Y-%m-%d %H:%M:%S"),
+        }})
+    data["applied"] = applied_list
+    data["applied_ids"] = list(set(data.get("applied_ids", [])) | {{job_id}})
+    save_tracker(data)
 
 # ── FILTERS ─────────────────────────────────────────────────────────────────────
 BANKING = [
@@ -151,11 +205,29 @@ def main():
             # With QClaw/OpenClaw:
             # "Run my automation. Open: {{url}}"
             # The AI will log in, find jobs, and apply automatically.
+            job_title = TARGET_ROLE
+            company = location
+            score = score_job(job_title, company)
+
+            if MIN_MATCH_SCORE > 0 and score < MIN_MATCH_SCORE:
+                print(f"  SKIP [{{score:.0%}} match] {{job_title}} @ {{company}}")
+                skipped += 1
+                continue
+
+            if DRY_RUN:
+                print(f"  DRY-RUN: would apply → {{job_title}} @ {{company}} (score={{score:.0%}})")
+                applied += 1
+                record("dryrun_" + str(applied), job_title, company, score, "dryrun")
+                applied_today += 1
+                continue
+
             time.sleep(random.uniform(45, 90))  # anti-bot cooldown
             applied_today += 1
+            applied += 1
+            record("job_" + str(applied), job_title, company, score, "applied")
 
     save_ids(applied_ids | {{"new_ids_here"}})
-    print(f"\\n✅ Done! Applied: {{applied_today}} today.")
+    print(f"\\n✅ Done! Applied: {{applied}} today | Skipped: {{skipped}} | Dry-run: {{DRY_RUN}}")
 
 if __name__ == "__main__":
     main()

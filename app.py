@@ -69,17 +69,25 @@ JOB_SITES_INFO = {
 }
 
 LOCATION_PRESETS = {
-    "🇮🇩 Indonesia — Karawang/Cikarang (on-site)": [
-        "Karawang, West Java, Indonesia", "Cikarang, Jawa Barat, Indonesia", "Bekasi, Jawa Barat, Indonesia",
+    "🇮🇩 Indonesia — Karawang/Cikarang/Bekasi (on-site)": [
+        "Karawang, West Java, Indonesia",
+        "Cikarang, Jawa Barat, Indonesia",
+        "Bekasi, Jawa Barat, Indonesia",
     ],
     "🇮🇩 Jakarta (hybrid/remote)": ["Jakarta, Indonesia"],
     "🇮🇩 Indonesia — SAP/ERP/SysAdmin": ["Indonesia"],
     "🇸🇬 Singapore": ["Singapore"],
     "🇲🇾 Malaysia": ["Malaysia"],
     "🇹🇭 Thailand": ["Thailand"],
-    "🌏 All locations above": [
-        "Karawang, West Java, Indonesia", "Cikarang, Jawa Barat, Indonesia", "Bekasi, Jawa Barat, Indonesia",
-        "Jakarta, Indonesia", "Indonesia", "Singapore", "Malaysia", "Thailand",
+    "🌏 All locations above (LinkedIn pattern)": [
+        "Karawang, West Java, Indonesia",
+        "Cikarang, Jawa Barat, Indonesia",
+        "Bekasi, Jawa Barat, Indonesia",
+        "Jakarta, Indonesia",
+        "Indonesia",
+        "Singapore",
+        "Malaysia",
+        "Thailand",
     ],
 }
 
@@ -198,6 +206,7 @@ def generate_script(
     exclusions, daily_cap, salary_local, salary_remote,
     seniority_skip, remote_only, tone, work_type,
     cv_skills, ai_mode, tool,
+    dry_run=False, min_match_score=0.3,
 ):
     locs_json  = json.dumps(locations, indent=2)
     sites_json = json.dumps(sites, indent=2)
@@ -440,7 +449,8 @@ def generate_output(
     locations_checklist, work_type, seniority,
     sites_checklist, daily_cap, salary_local, salary_remote,
     exclusions, tone, ai_mode, tool,
-    cv_upload, cv_text,
+    dry_run=False, min_match_score=0.3,
+    cv_upload=None, cv_text="",
 ):
     # Resolve role
     preset_map = {
@@ -492,6 +502,7 @@ def generate_output(
         exclusions, daily_cap, salary_local, salary_remote,
         seniority == "Entry / Junior only", work_type == "Remote only",
         tone, work_type, skills, ai_mode, tool,
+        dry_run, min_match_score,
     )
 
     # Cover letters per site
@@ -623,7 +634,7 @@ with gr.Blocks(
             gr.Markdown("*Select all that apply. The script will search all these locations.*")
             locs_in = gr.CheckboxGroup(
                 choices=list(LOCATION_PRESETS.keys()),
-                value=["🇮🇩 Indonesia — Karawang/Cikarang (on-site)"],
+                value=["🇮🇩 Indonesia — Karawang/Cikarang/Bekasi (on-site)"],
                 label="Location Groups",
             )
 
@@ -665,6 +676,11 @@ with gr.Blocks(
 
             gr.Markdown("#### 🔢 Daily Application Cap")
             cap_in = gr.Slider(5, 100, value=50, step=5, label="Max jobs to apply per day",)
+
+            gr.Markdown("#### 🧪 Match Scoring & Dry Run")
+            with gr.Row():
+                dry_run_toggle = gr.Checkbox(label="🧪 Dry Run Mode (test without applying)", value=False)
+                min_match = gr.Slider(label="🎯 Min Match Score", minimum=0.0, maximum=1.0, value=0.3, step=0.05)
 
         # ════════════════════════════════════════════════════════════
         # TAB 3 — JOB SITES & TOOLS
@@ -746,6 +762,7 @@ with gr.Blocks(
         locations, work_type, seniority,
         sites, daily_cap, salary_local, salary_remote,
         exclusions, tone, ai_mode, tool,
+        dry_run_val, min_match_val,
         cv_up, cv_tx,
     ):
         tone_map  = {"Clean and formal": "Professional",
@@ -759,12 +776,15 @@ with gr.Blocks(
         wt_val     = locs_map.get(work_type, work_type)
         sr_map     = {v[1]: v[0] for v in SENIORITY_OPTIONS}
         sr_val     = sr_map.get(seniority, seniority)
+        dry_run_val2 = bool(dry_run_val)
+        min_match_val2 = float(min_match_val)
 
         summary, script, cl, urls, disc = generate_output(
             name, email, phone, role, preset,
             locations, wt_val, sr_val,
             sites, int(daily_cap), salary_local, salary_remote,
             exclusions, tone_val, ai_val, tool_val,
+            dry_run_val2, min_match_val2,
             cv_up, cv_tx,
         )
         return summary, script, cl, urls, disc
@@ -777,7 +797,7 @@ with gr.Blocks(
             locs_in, wt_in, sr_in,
             sites_in, cap_in, sal_l, sal_r,
             excl_in, tone_in, ai_mode_in, tool_in,
-            cv_up, cv_tx,
+            dry_run_toggle, min_match, cv_up, cv_tx,
         ],
         outputs=[summary_out, script_out, cl_out, urls_out, disclaimer_out],
     )
