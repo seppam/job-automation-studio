@@ -1,3 +1,15 @@
+---
+title: Job Automation Studio
+emoji: 🤖🚀
+colorFrom: blue
+colorTo: purple
+sdk: gradio
+sdk_version: 5.x.x
+app_file: app.py
+pinned: false
+license: mit
+---
+
 # 🚀 Job Automation Studio
 
 > 📄 **[Download the Visual SOP Guide (PDF) — Job-Automation-Studio-SOP.pdf](Job-Automation-Studio-SOP.pdf)**
