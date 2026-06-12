@@ -1,7 +1,0 @@
-[project]
-name = "job-automation-studio"
-requires-python = ">=3.11"
-dependencies = [
-    "gradio==4.44.1",
-    "PyYAML>=6.0",
-]
