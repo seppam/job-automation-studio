@@ -515,7 +515,7 @@ def generate_output(
     url_lines = []
     for site in selected_sites:
         for loc in flat_locs[:5]:
-            url_lines.append(f"- [{site}] **{role}** @ **{loc}**\n  {build_url(site, role or "role", loc)}")
+            url_lines.append(f"- [{site}] **{role}** @ **{loc}**\n  {build_url(site, role or 'role', loc)}")
     urls_text = "\n".join(urls_text for urls_text in url_lines) if url_lines else "_Select locations in Step 2_"
 
     disclaimer = """⚠️ **Before you run this script — important:**
