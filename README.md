@@ -1,10 +1,11 @@
 ---
 title: Job Automation Studio
-emoji: 🤖🚀
+emoji: "🤖"
 colorFrom: blue
 colorTo: purple
 sdk: gradio
-sdk_version: "5.0.0"
+sdk_version: "5.50.0"
+python_version: "3.11"
 app_file: app.py
 pinned: false
 license: mit
@@ -47,13 +48,14 @@ Answer a few questions → Download your script → Run it with your AI agent.
 
 ### Step 1 — Download
 ```bash
-git clone https://github.com/YOUR_USERNAME/job-automation-studio.git
+git clone https://github.com/seppam/job-automation-studio.git
 cd job-automation-studio
 ```
 
 ### Step 2 — Install Requirements
 ```bash
-pip install gradio PyYAML
+python3.11 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
 ```
 
 ### Step 3 — Run the Dashboard
